@@ -1,0 +1,16 @@
+{
+  "author": "",
+  "name": "twgram",
+  "description": "heroku on coffeescript",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "dependencies": {
+    "coffee-script":"",
+    "zappa":"",
+    "ntwitter":""
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}

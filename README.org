@@ -1,0 +1,55 @@
+* Instare - Instagram pics from Twitter
+  Demo
+  http://instare.herokuapp.com/
+
+* Herokuで動かすWebアプリの、認証情報をソースから追い出す方法
+  直接consumer_key: "自分のキー"等書いてるとオープンソースで公開出来ない。
+  そのため、認証情報はソースから追い出す。
+
+  Herokuなら、Heroku側に次のコマンドで、認証情報等を環境変数に追加する
+  
+  $ heroku config:add CONSUMER_KEY=自分のキー CONSUMER_SECRET=自分のキー
+  $ heroku config:add ACCESS_TOKEN_KEY=自分のキー ACCESS_TOKEN_SECRET=自分のキー
+
+  次に、
+  consumer_key: "自分のキー"
+  と書いてるところを環境変数で置き換え、次のようにする
+  consumer_key: process.env.CONSUMER_KEY
+
+* 認証情報をローカルでも使う方法
+  
+  .envを.gitignoresに追加
+
+  .envに認証情報を書く(ローカル用)
+  CONSUMER_KEY=ここにキー
+  CONSUMER_SECRET=ここにキー
+  ACCESS_TOKEN_KEY=ここにキー
+  ACCESS_TOKEN_SECRET=ここにキー
+
+
+** foremanを使う
+  $ gem install foreman
+  試す時は $ foreman start
+
+* 参考資料
+  HerokuでNode.jsを動かす
+  http://devcenter.heroku.com/articles/node-js
+
+  herokuでcoffeescriptで書かれたWEBフレームワーク「zappa」を動かす際のメモ
+  http://a-newcomer.com/42
+
+  INSTAGRAM API
+  http://instagram.com/developer/embedding/
+  
+  Streaming API Methods | Twitter Developers
+  https://dev.twitter.com/docs/streaming-api/methods
+
+  ntwitter(Streaming apiを扱うライブラリ)
+  https://github.com/AvianFlu/ntwitter
+
+  ntwitterを使ってリアルタイムにツイート取得
+  http://cross.hvn.to/?p=1409
+
+  socket.io(zappaが内部で使用してるライブラリ)
+  http://socket.io/
+  

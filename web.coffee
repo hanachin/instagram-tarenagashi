@@ -2,7 +2,21 @@ Twitter = require("ntwitter")
 port = Number(process.env.PORT or 5000)
 
 require("zappa") port, ->
+  @use 'static'
+
   @enable "serve jquery"
+
+  @get "/json": ->
+    JSON.stringify key:"value", foo:"bar"
+
+  @view "hello.eco": """
+    <% @title = 'eco test' %>
+    <h1><%= @title %></h1>
+  """
+
+  @get "/something": ->
+    @render "hello.eco", layout: no
+
   @get "/": ->
     @render "index"
 
@@ -24,14 +38,15 @@ require("zappa") port, ->
         script src: "/zappa/zappa.js"
         script src: "/socket.io/socket.io.js"
         script src: "/index.js"
+        script src: "/hello.js"
         title "Hello, world"
       body @body
 
   twitter = new Twitter
-    consumer_key: "1MBTo6FGuozQFI7xVz1vA"
-    consumer_secret: "p0fO9JYh8Q6WGveaiZRz8L3ZukJ7VO7jJncjxDHBA"
-    access_token_key: "500436817-v3xL9QlV6lmNeNnMxMbnXq3p0rXQ2LFt54Ysc"
-    access_token_secret: "uIUIkU3JBhuYN7VsLxLgUU2nxaEUJC4Kfe9FxIYxg"
+    consumer_key: process.env.CONSUMER_KEY
+    consumer_secret: process.env.CONSUMER_SECRET
+    access_token_key: process.env.ACCESS_TOKEN_KEY
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
 
   twitter.stream "statuses/filter", {track:"instagr"}, (stream) =>
     stream.on "data", (tweet) =>
